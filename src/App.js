@@ -102,7 +102,7 @@ export default function App() {
             logoutOfWeb3Modal={logoutOfWeb3Modal}
           />
           <Switch>
-            <Route path="/" exact component={Home} />
+            <Route path="/" exact render={(props) => <Home />} />
             <Route
               path="/ladder"
               exact
@@ -115,7 +115,7 @@ export default function App() {
                 />
               )}
             />
-            <Route path="/404" exact component={PageNotFound} />
+            <Route path="/404" exact render={(props) => <PageNotFound />} />
             <Redirect to="/404" />
           </Switch>
           <Footer />
