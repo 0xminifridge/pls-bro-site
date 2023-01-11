@@ -1287,7 +1287,7 @@ export default function Footer({}) {
             }}
           ></div>
         </div>
-        <div class="content">
+        <div class="content flex text-center justify-center items-end">
           {/* <div class="flex flex-col justify-center text-center">
             <div>
               <span class="font-bold">
@@ -1295,6 +1295,14 @@ export default function Footer({}) {
               </span>
             </div>
             
+          </div> */}
+          {/* <div>
+            <a href="https://www.twitter.com/0x_minifridge" target="_blank">
+              <div class="flex flex-row justify-start items-center">
+                <img src="./images/logo.png" class="w-[150px] md:w-[250px]" />
+                <span>Minifridge</span>
+              </div>
+            </a>
           </div> */}
           {/* <div>
             <a
@@ -1305,8 +1313,18 @@ export default function Footer({}) {
                   "url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/199011/happy.svg')",
               }}
             ></a>
-            <p class="font-bold">©{new Date().getFullYear()} (pls, bro) labs</p>
+            
           </div> */}
+          <p class="font-bold text-gray-400">
+            created and curated by{" "}
+            <a
+              href="https://www.twitter.com/0x_minifridge"
+              target="_blank"
+              class="hover:text-black"
+            >
+              minifridge
+            </a>
+          </p>
         </div>
       </div>
       <svg style={{ position: "fixed", top: "100vh" }}>

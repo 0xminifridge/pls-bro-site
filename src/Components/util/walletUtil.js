@@ -6,3 +6,9 @@ export function parseWalletAddress(address) {
   }
   return "";
 }
+
+export const getCurrentNetwork = () => {
+  if (window.ethereum) {
+    return window.ethereum.networkVersion;
+  }
+};

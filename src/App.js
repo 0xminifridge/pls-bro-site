@@ -7,10 +7,14 @@ import { ethers } from "ethers";
 import { web3ModalSetup } from "./Components/util/web3ModalUtil";
 import PageNotFound from "./Components/PageNotFound";
 import Footer from "./Components/Footer";
+import Ladder from "./Components/Ladder";
+import TransactionPopup from "./Components/TransactionPopup";
 
 export default function App() {
   const [account, setAccount] = useState("");
   const [web3Provider, setWeb3Provider] = useState(null);
+  const [transactionProcessing, setTransactionProcessing] = useState(false);
+  const [transactionHash, setTransactionHash] = useState("");
   const web3Modal = web3ModalSetup();
 
   // logout function
@@ -82,23 +86,41 @@ export default function App() {
 
   const Routing = () => {
     return (
-      <BrowserRouter>
-        <Navbar
-          account={account}
-          setAccount={setAccount}
-          web3Modal={web3Modal}
-          loadWeb3Modal={loadWeb3Modal}
-          web3Provider={web3Provider}
-          setWeb3Provider={setWeb3Provider}
-          logoutOfWeb3Modal={logoutOfWeb3Modal}
+      <>
+        <TransactionPopup
+          transactionProcessing={transactionProcessing}
+          transactionHash={transactionHash}
         />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/404" exact component={PageNotFound} />
-          <Redirect to="/404" />
-        </Switch>
-        <Footer />
-      </BrowserRouter>
+        <BrowserRouter>
+          <Navbar
+            account={account}
+            setAccount={setAccount}
+            web3Modal={web3Modal}
+            loadWeb3Modal={loadWeb3Modal}
+            web3Provider={web3Provider}
+            setWeb3Provider={setWeb3Provider}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+          />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route
+              path="/ladder"
+              exact
+              render={(props) => (
+                <Ladder
+                  account={account}
+                  transactionProcessing={transactionProcessing}
+                  setTransactionProcessing={setTransactionProcessing}
+                  setTransactionHash={setTransactionHash}
+                />
+              )}
+            />
+            <Route path="/404" exact component={PageNotFound} />
+            <Redirect to="/404" />
+          </Switch>
+          <Footer />
+        </BrowserRouter>
+      </>
     );
   };
   return (

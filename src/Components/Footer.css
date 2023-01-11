@@ -42,16 +42,13 @@ body .footer .bubbles .bubble {
 
 body .footer .content {
   z-index: 2;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-gap: 4rem;
-  padding: 2rem;
+
+  padding: 0.5rem;
   background: var(--footer-background);
 }
 
 body .footer .content a,
 body .footer .content p {
-  color: black;
   text-decoration: none;
 }
 
