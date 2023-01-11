@@ -208,8 +208,8 @@ export default function Ladder({
             href="https://campfire.exchange/collections/0xeea030a1bc8fd534864a7a77d94dde0858b3c1fb?sortType=price&sortDirection=asc&onlyForSale=false"
             target="_blank"
           >
-            <div class="border-2 border-white rounded-xl overflow-hidden w-40 md:w-full m-auto hover:opacity-80">
-              <img src="./images/ladder.png" class="w-40 md:w-full" />
+            <div class="border-2 border-white rounded-xl overflow-hidden w-40 md:w-64 m-auto hover:opacity-80">
+              <img src="./images/ladder.png" class="w-40 md:w-64" />
             </div>
           </a>
           {whitelistOpen && !publicSaleOpen && (
