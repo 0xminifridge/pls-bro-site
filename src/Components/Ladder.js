@@ -16,8 +16,8 @@ export default function Ladder({
   const [whitelisted, setWhitelisted] = useState(null);
   const [error, setError] = useState(null);
   const [price, setPrice] = useState(3);
-  const [whitelistOpen, setWhitelistOpen] = useState(true);
-  const [publicSaleOpen, setPublicSaleOpen] = useState(true);
+  const [whitelistOpen, setWhitelistOpen] = useState(false);
+  const [publicSaleOpen, setPublicSaleOpen] = useState(false);
   const max = 10;
   const increment = () => {
     if (mintAmount < max) {
@@ -222,6 +222,11 @@ export default function Ladder({
               Public sale is live!
             </span>
           )}
+          {!whitelistOpen && !publicSaleOpen && (
+            <span class="m-auto text-gray-400 text-xl py-2">
+              Sale is not yet live
+            </span>
+          )}
           <span class="m-auto text-gray-400 text-xl py-2">
             Price: {price} AVAX
           </span>
@@ -244,7 +249,8 @@ export default function Ladder({
           </div>
 
           <button
-            class="border-gray-400 px-2 py-1 rounded text-lg border-2 text-gray-400 hover:text-white hover:border-white w-20 m-auto"
+            class="border-gray-400 px-2 py-1 rounded text-lg border-2 text-gray-400 hover:text-white hover:border-white w-20 m-auto disabled:text-black disabled:border-black"
+            disabled={transactionProcessing}
             onClick={() => mintPressed()}
           >
             Mint
