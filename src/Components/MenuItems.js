@@ -4,6 +4,11 @@ export const MenuItems = [
     tlink: "/ladder",
     tTarget: "_self",
   },
+  {
+    title: "Who Is",
+    tlink: "/whois",
+    tTarget: "_self",
+  },
   // {
   //   title: "Services",
   //   tlink: "/services",

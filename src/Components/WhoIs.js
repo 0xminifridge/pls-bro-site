@@ -22,15 +22,19 @@ export default function WhoIs() {
     console.log(e);
     if (e.key === "Enter") {
       console.log("Lookup for: " + inputText);
-      const dns = await getUsernameForAddress(inputText);
       const avvyDomain = await lookupAvvy(inputText);
       const fireDomain = await lookupFire(inputText);
       if (avvyDomain) {
         setAvvy(avvyDomain);
       } else {
+        setAvvy(null);
+        setAvvyError(true);
       }
       if (fireDomain) {
         setDotFire(fireDomain);
+      } else {
+        setDotFire(null);
+        setFireError(true);
       }
     }
   };
@@ -71,14 +75,26 @@ export default function WhoIs() {
               {avvyError && (
                 <h3>
                   No .avax domain registerd. Get one{" "}
-                  <a href="https://app.avvy.domains/register">here</a>!
+                  <a
+                    class="hover:underline text-white"
+                    href="https://app.avvy.domains/register"
+                  >
+                    here
+                  </a>
+                  !
                 </h3>
               )}
               {dotFire && <h3>Registered .fire/.moo: {dotFire}</h3>}
               {fireError && (
                 <h3>
                   No .fire domain registerd. Get one{" "}
-                  <a href="https://campfire.exchange/minting/fire">here</a>!
+                  <a
+                    class="hover:underline text-white"
+                    href="https://campfire.exchange/minting/fire"
+                  >
+                    here
+                  </a>
+                  !
                 </h3>
               )}
             </div>

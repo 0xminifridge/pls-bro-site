@@ -9,6 +9,7 @@ import PageNotFound from "./Components/PageNotFound";
 import Footer from "./Components/Footer";
 import Ladder from "./Components/Ladder";
 import TransactionPopup from "./Components/TransactionPopup";
+import WhoIs from "./Components/WhoIs";
 
 export default function App() {
   const [account, setAccount] = useState("");
@@ -115,6 +116,7 @@ export default function App() {
                 />
               )}
             />
+            <Route path="/whois" exact render={(props) => <WhoIs />} />
             <Route path="/404" exact render={(props) => <PageNotFound />} />
             <Redirect to="/404" />
           </Switch>
