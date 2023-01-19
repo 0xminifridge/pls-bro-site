@@ -9,6 +9,8 @@ import PageNotFound from "./Components/PageNotFound";
 import Footer from "./Components/Footer";
 import Ladder from "./Components/Ladder";
 import TransactionPopup from "./Components/TransactionPopup";
+import Minting from "./Components/MintingCollections";
+import MintingCollectionPage from "./Components/MintingCollectionPage";
 import WhoIs from "./Components/WhoIs";
 
 export default function App() {
@@ -104,6 +106,12 @@ export default function App() {
           />
           <Switch>
             <Route path="/" exact render={(props) => <Home />} />
+            <Route path="/minting" exact render={(props) => <Minting />} />
+            <Route
+              path="/minting/:address"
+              exact
+              render={(props) => <MintingCollectionPage />}
+            />
             <Route
               path="/ladder"
               exact
