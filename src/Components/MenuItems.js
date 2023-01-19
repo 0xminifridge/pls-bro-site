@@ -9,11 +9,7 @@ export const MenuItems = [
     tlink: "/whois",
     tTarget: "_self",
   },
-  // {
-  //   title: "Services",
-  //   tlink: "/services",
-  //   tTarget: "_self",
-  // },
+  {
     title: "Minting",
     tlink: "/minting",
     tTarget: "_self",
