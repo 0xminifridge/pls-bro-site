@@ -100,7 +100,7 @@ export async function getUsernameForAddress(address) {
   } else if (fireDomain) {
     return fireDomain;
   } else {
-    return address;
+    return parseWalletAddress(address);
   }
 }
 

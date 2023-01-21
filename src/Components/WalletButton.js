@@ -1,4 +1,6 @@
 import { parseWalletAddress } from "./util/walletUtil";
+import { getUsernameForAddress } from "./util/usernames";
+import { useEffect, useState } from "react";
 
 export default function WalletButton({
   account,
@@ -10,6 +12,25 @@ export default function WalletButton({
   logoutOfWeb3Modal,
 }) {
   const isConnected = Boolean(account);
+  const [walletAddress, setWalletAddress] = useState(
+    parseWalletAddress(account)
+  );
+
+  useEffect(() => {
+    const getVanityDomain = async () => {
+      if (account) {
+        const domain = await getUsernameForAddress(account);
+        console.log("domain", domain);
+        if (domain.avvy) {
+          setWalletAddress(domain.avvy);
+        } else if (domain.fireDomain) {
+          setWalletAddress(domain.fireDomain);
+        }
+      }
+    };
+
+    getVanityDomain();
+  }, [account]);
 
   const onClickConnect = async () => {
     console.log("Attempting to connect");
@@ -27,7 +48,7 @@ export default function WalletButton({
   if (isConnected) {
     return (
       <button class={btnClasses} onClick={() => onClickDisconnect()}>
-        {parseWalletAddress(account)}
+        {walletAddress}
       </button>
     );
   } else {
