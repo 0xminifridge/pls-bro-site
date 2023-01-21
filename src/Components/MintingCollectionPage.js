@@ -7,6 +7,7 @@ import { Contract, ethers } from "ethers";
 import { LADDER_ADDRESS, LADDER_ABI } from "../contracts/Ladder";
 import { getCurrentNetwork } from "./util/walletUtil";
 import { MintingCollectionData } from "./constants/Collections";
+import { getCollectionDetails } from "./util/firebaseUtil";
 
 export default function MintingCollectionPage({
   account,
@@ -21,43 +22,88 @@ export default function MintingCollectionPage({
   const [price, setPrice] = useState(3);
   const [whitelistOpen, setWhitelistOpen] = useState(false);
   const [publicSaleOpen, setPublicSaleOpen] = useState(false);
-  const max = 10;
 
-  const increment = () => {
-    if (mintAmount < max) {
-      setMintAmount(mintAmount + 1);
+  const [mintOpen, setMintOpen] = useState(false);
+  const [amount, setAmount] = useState(0);
+
+  const MINT_ABI = [
+    {
+      inputs: [
+        { internalType: "uint256", name: "numberOfTokens", type: "uint256" },
+      ],
+      name: "mint",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
+  ];
+
+  useEffect(() => {
+    const updateMintOpen = async () => {
+      if (collectionDetails) {
+        setMintOpen(
+          new Date(collectionDetails.mintStartTime.seconds * 1000) < new Date()
+        );
+      }
+    };
+    updateMintOpen();
+  }, [collectionDetails]);
+
+  const mintPressed = async (address) => {
+    console.log(address, amount);
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        if (address && MINT_ABI && signer) {
+          const contract = new Contract(address, MINT_ABI, signer);
+
+          const totalPrice = parseFloat(collectionDetails.price) * amount;
+
+          let tx = await contract.mint(amount, {
+            value: ethers.utils.parseEther(totalPrice.toString()),
+          });
+          let hash = tx.hash;
+          setTransactionHash(hash);
+          await tx.wait();
+        } else {
+          console.log("Issue with address, abi, or signer");
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setTransactionProcessing(false);
     }
   };
-
-  const decrement = () => {
-    if (mintAmount > 1) {
-      setMintAmount(mintAmount - 1);
-    }
-  };
-
-  const mintPressed = async () => {};
 
   const { address } = useParams();
 
-  const fetchCollectionDetails = () => {
+  const fetchCollectionDetails = async () => {
     console.log("fetching for: " + address);
-    let collection = MintingCollectionData.filter((obj) => {
-      return obj.address === address;
-    });
+    let collectionData = await getCollectionDetails(address);
+    console.log(collectionData);
 
-    if (collection) {
-      // should only be 1
-      let collectionObj = collection[0];
-      setCollectionDetails(collectionObj);
-      //   setPrice(collection.price);
+    if (collectionData) {
+      console.log("details found");
+      setCollectionDetails(collectionData);
+      // console.log(
+      //   new Date(collectionDetails.mintStartTime.seconds * 1000) < new Date()
+      // );
+      // setMintOpen(
+      //   new Date(collectionDetails.mintStartTime.seconds * 1000) < new Date()
+      // );
+    } else {
+      console.log(`No details for address ${address}`);
     }
-
-    console.log(collection);
   };
 
   useEffect(() => {
     fetchCollectionDetails();
   }, []);
+
   return (
     <div class="h-[93vh] md:h-[100vh] bg-black">
       <div class="text-white flex justify-center flex-col w-full h-full">
@@ -148,26 +194,18 @@ export default function MintingCollectionPage({
               />
             </div>
           </a>
-          {whitelistOpen && !publicSaleOpen && (
+          {collectionDetails.mintStartTime && mintOpen ? (
+            <span class="m-auto text-gray-400 text-xl py-2">Sale is live!</span>
+          ) : (
             <span class="m-auto text-gray-400 text-xl py-2">
-              Whitelist sale is live!
-            </span>
-          )}
-          {publicSaleOpen && (
-            <span class="m-auto text-gray-400 text-xl py-2">
-              Public sale is live!
-            </span>
-          )}
-          {!whitelistOpen && !publicSaleOpen && (
-            <span class="m-auto text-gray-400 text-xl py-2">
-              Sale is not yet live
+              Minting has not started
             </span>
           )}
           <span class="m-auto text-gray-400 text-xl py-2">
             Price: {collectionDetails.price} AVAX
           </span>
           <div class="w-40 m-auto">
-            <div class="flex flex-row justify-between m-4 items-center text-2xl">
+            {/* <div class="flex flex-row justify-between m-4 items-center text-2xl">
               <button
                 class="border-gray-400 px-2 py-1 rounded border-2 text-gray-400 hover:text-white hover:border-white"
                 onClick={() => decrement()}
@@ -181,21 +219,37 @@ export default function MintingCollectionPage({
               >
                 +
               </button>
-            </div>
+            </div> */}
+            <select
+              style={{
+                visibility: collectionDetails.amountPerTx
+                  ? "visible"
+                  : "hidden",
+              }}
+              onChange={(event) => setAmount(event.target.value)}
+              class="w-full mb-4 rounded-md bg-black py-2 px-3 grow focus:outline-none focus:ring-white hover:border-white focus:ring-1 border-2 border-gray-400"
+            >
+              {[...Array(collectionDetails.amountPerTx)].map(
+                (element, index) => {
+                  // return <option value={element + 1}>{element + 1}</option>;
+                  return <option>{index + 1}</option>;
+                }
+              )}
+            </select>
           </div>
 
           <button
             class="border-gray-400 px-2 py-1 rounded text-lg border-2 text-gray-400 hover:text-white hover:border-white w-20 m-auto disabled:text-black disabled:border-black"
             disabled={transactionProcessing}
-            onClick={() => mintPressed()}
+            onClick={() => mintPressed(collectionDetails.address)}
           >
             Mint
           </button>
-          <div class="flex justify-center flex-col m-4 text-center text-gray-400">
+          {/* <div class="flex justify-center flex-col m-4 text-center text-gray-400">
             {whitelisted && !error && <span>You are on the allowlist</span>}
             {!whitelisted && !error && <span>You are not the allowlist</span>}
             {error && <span>Error: {error}</span>}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

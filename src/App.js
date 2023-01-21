@@ -106,11 +106,29 @@ export default function App() {
           />
           <Switch>
             <Route path="/" exact render={(props) => <Home />} />
-            <Route path="/minting" exact render={(props) => <Minting />} />
+            <Route
+              path="/minting"
+              exact
+              render={(props) => (
+                <Minting
+                  account={account}
+                  transactionProcessing={transactionProcessing}
+                  setTransactionProcessing={setTransactionProcessing}
+                  setTransactionHash={setTransactionHash}
+                />
+              )}
+            />
             <Route
               path="/minting/:address"
               exact
-              render={(props) => <MintingCollectionPage />}
+              render={(props) => (
+                <MintingCollectionPage
+                  account={account}
+                  transactionProcessing={transactionProcessing}
+                  setTransactionProcessing={setTransactionProcessing}
+                  setTransactionHash={setTransactionHash}
+                />
+              )}
             />
             <Route
               path="/ladder"

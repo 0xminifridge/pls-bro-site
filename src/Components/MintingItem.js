@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 export default function MintingItem({ item }) {
+  console.log(item);
   return (
     <Link to={{ pathname: `/minting/${item.address}` }}>
       <div
-        class="flex flex-row justify-center p-2 hover:bg-gray-800 rounded-xl w-full"
+        class="flex flex-row justify-center p-2 hover:bg-gray-800 rounded-xl w-full hover:opacity-80"
         onClick={(event) => event.stopPropagation()}
       >
-        <div class="border-2 border-white rounded-xl overflow-hidden w-40 md:w-64 m-auto hover:opacity-80">
+        <div class="border-2 border-white rounded-xl overflow-hidden w-40 md:w-64 m-auto">
           <img src={item.previewImageUrl} class="w-40 md:w-64" />
         </div>
         <div class="flex flex-col justify-center text-center px-2">
@@ -100,7 +101,7 @@ export default function MintingItem({ item }) {
           </div>
           <div class="flex flex-col">
             <span>{item.price} AVAX</span>
-            <span>0/{item.maxSupply}</span>
+            <span>0/{item.supply}</span>
           </div>
         </div>
       </div>

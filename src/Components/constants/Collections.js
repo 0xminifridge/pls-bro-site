@@ -15,7 +15,7 @@ export const MintingCollectionData = [
     twitter: "https://twitter.com/TheLadder_",
     discord: "https://discord.com/invite/sD2A5mjuuH",
     website: "",
-    previewImageUrl: "./images/ladder.png",
+    previewImageUrl: "https://i.imgur.com/nnBAbnC.jpeg",
     price: "71",
     maxSupply: "1500",
   },
