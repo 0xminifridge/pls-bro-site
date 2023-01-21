@@ -18,7 +18,7 @@ export default function Navbar({
   };
 
   return (
-    <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-black sticky top-0 h-[7vh]">
+    <nav class="bg-black border-gray-200 px-2 sm:px-4 py-2.5 sticky top-0 h-[10vh]">
       <div class="container flex flex-wrap justify-between items-center mx-auto">
         <Link to={{ pathname: "/" }} class="flex items-center">
           <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white hover:text-gray-400">
