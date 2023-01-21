@@ -3,7 +3,7 @@ export default function MintingItem({ item }) {
   return (
     <Link to={{ pathname: `/minting/${item.address}` }}>
       <div
-        class="flex flex-row justify-start p-2 hover:bg-gray-800 rounded-xl w-full"
+        class="flex flex-row justify-center p-2 hover:bg-gray-800 rounded-xl w-full"
         onClick={(event) => event.stopPropagation()}
       >
         <div class="border-2 border-white rounded-xl overflow-hidden w-40 md:w-64 m-auto hover:opacity-80">

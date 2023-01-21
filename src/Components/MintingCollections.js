@@ -6,7 +6,7 @@ export default function Minting({}) {
     <>
       <div class="h-[93vh] md:h-[100vh] bg-black overflow-y-scroll">
         <div class="text-white flex justify-center flex-col">
-          <div class="m-auto flex flex-col justify-center">
+          <div class="m-auto flex flex-col justify-center w-full">
             {MintingCollectionData.map((item, index) => {
               return <MintingItem key={index} item={item} />;
             })}
