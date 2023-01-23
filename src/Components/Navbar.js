@@ -21,14 +21,14 @@ export default function Navbar({
     <nav class="bg-black border-gray-200 px-2 sm:px-4 py-2.5 sticky top-0 h-[10vh]">
       <div class="container flex flex-wrap justify-between items-center mx-auto">
         <Link to={{ pathname: "/" }} class="flex items-center">
-          <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white hover:text-gray-400">
+          <span class="self-center text-xl font-semibold whitespace-nowrap text-white hover:text-gray-400">
             (pls, bro)
           </span>
         </Link>
         <button
           data-collapse-toggle="navbar-default"
           type="button"
-          class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          class="inline-flex items-center p-2 ml-3 text-sm rounded-lg md:hidden focus:outline-none focus:ring-2  text-gray-400 hover:bg-black focus:ring-gray-600"
           aria-controls="navbar-default"
           aria-expanded="false"
           onClick={() => toggleNav()}
@@ -49,13 +49,13 @@ export default function Navbar({
           </svg>
         </button>
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-          <ul class="flex flex-col items-center p-4 mt-4 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-black">
+          <ul class="flex flex-col items-center p-4 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 bg-black">
             {MenuItems.map((item, index) => {
               return (
                 <li>
                   <Link
                     to={{ pathname: item.tlink }}
-                    class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-cd-green md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                    class="block py-2 pr-4 pl-3 rounded md:border-0 md:hover:text-cd-green md:p-0 text-gray-400 md:hover:text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent"
                     onClick={() => toggleNav()}
                   >
                     {item.title}
