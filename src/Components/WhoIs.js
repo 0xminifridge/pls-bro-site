@@ -156,6 +156,7 @@ export function ValidForwardLookup({ addressforAvvy, addressForFire }) {
           </a>
         </h3>
       )}
+      {!addressforAvvy && !addressForFire && <h3>No resolver records found</h3>}
     </div>
   );
 }
