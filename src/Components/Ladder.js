@@ -16,8 +16,8 @@ export default function Ladder({
   const [whitelisted, setWhitelisted] = useState(null);
   const [error, setError] = useState(null);
   const [price, setPrice] = useState(3);
-  const [whitelistOpen, setWhitelistOpen] = useState(false);
-  const [publicSaleOpen, setPublicSaleOpen] = useState(false);
+  const [whitelistOpen, setWhitelistOpen] = useState(true);
+  const [publicSaleOpen, setPublicSaleOpen] = useState(true);
   const max = 10;
   const increment = () => {
     if (mintAmount < max) {
@@ -33,21 +33,26 @@ export default function Ladder({
 
   useEffect(() => {
     const checkForWhitelist = async () => {
-      const { status, whitelistOpen, publicSaleOpen, error } =
-        await getContractParameters(account);
-      console.log(status, error);
-      setWhitelisted(status);
-      if (status) {
-        setPrice(2.2);
-      }
-      if (whitelistOpen) {
-        setWhitelistOpen(whitelistOpen);
-      }
-      if (publicSaleOpen) {
-        setPublicSaleOpen(publicSaleOpen);
-      }
-      if (error) {
-        setError(error);
+      if (account) {
+        console.log(account);
+        const { status, whitelistOpen, publicSaleOpen, error } =
+          await getContractParameters(account);
+        console.log(status, error);
+        setWhitelisted(status);
+        if (status) {
+          setPrice(2.2);
+        }
+        if (whitelistOpen) {
+          setWhitelistOpen(whitelistOpen);
+        }
+        if (publicSaleOpen) {
+          setPublicSaleOpen(publicSaleOpen);
+        }
+        if (error) {
+          setError(error);
+        }
+      } else {
+        setError("Please connect wallet");
       }
     };
     checkForWhitelist();
@@ -258,7 +263,7 @@ export default function Ladder({
           <div class="flex justify-center flex-col m-4 text-center text-gray-400">
             {whitelisted && !error && <span>You are on the allowlist</span>}
             {!whitelisted && !error && <span>You are not the allowlist</span>}
-            {error && <span>Error: {error}</span>}
+            {error && <span>{error}</span>}
           </div>
         </div>
       </div>
